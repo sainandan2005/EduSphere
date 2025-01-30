@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { auth } from './firebase';
+import { onAuthStateChanged, User, signOut } from 'firebase/auth';
+import AuthModal from './components/AuthModal';
 import { Message, YouTubeVideo } from './types';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
@@ -11,6 +14,15 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleSendMessage = async (content: string) => {
     try {
@@ -24,7 +36,6 @@ function App() {
       setMessages(prev => [...prev, userMessage]);
       setLoading(true);
 
-      // Generate AI response
       const response = await generateResponse(content);
       
       const botMessage: Message = {
@@ -35,8 +46,6 @@ function App() {
       };
 
       setMessages(prev => [...prev, botMessage]);
-
-      // Search for relevant videos
       const newVideos = await searchVideos(content);
       setVideos(newVideos);
     } catch (error) {
@@ -53,10 +62,20 @@ function App() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900">
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      
       <div className="max-w-7xl mx-auto px-4 py-6 lg:px-8 lg:py-8">
-        <header className="text-center mb-8">
+        <header className="text-center mb-8 relative">
           <div className="inline-flex items-center justify-center gap-3 px-4 py-2 rounded-2xl bg-blue-500/10 backdrop-blur-sm mb-4">
             <Brain className="h-8 w-8 text-blue-400" />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">
@@ -64,6 +83,24 @@ function App() {
             </h1>
           </div>
           <p className="text-blue-300/80 text-lg">Your AI-powered learning companion</p>
+          
+          <div className="absolute top-0 right-0 space-x-4">
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm bg-red-600/20 text-red-300 rounded-lg hover:bg-red-600/30 transition-colors"
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowAuthModal(true)}
+                className="px-4 py-2 text-sm bg-green-600/20 text-green-300 rounded-lg hover:bg-green-600/30 transition-colors"
+              >
+                Sign Up / Login
+              </button>
+            )}
+          </div>
         </header>
 
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
@@ -81,7 +118,15 @@ function App() {
                     </div>
                     <div>
                       <p className="text-xl font-semibold text-white mb-2">Welcome to EduSphere</p>
-                      <p className="text-blue-300/80">Ask questions, get explanations, or generate quizzes</p>
+                      <p className="text-blue-300/80">
+                        {user 
+                          ? "Continue your learning journey - ask questions or generate quizzes"
+                          : "Explore freely - ask questions, get explanations"}
+                          <br />
+                          <span className="text-red-400">
+                            Note: Please enter specific inputs for optimal results. Avoid using this like a chatbot.
+                          </span>
+                      </p>
                     </div>
                   </div>
                 )}

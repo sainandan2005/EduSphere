@@ -24,7 +24,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         disabled={disabled}
-        placeholder="Ask me anything..."
+        placeholder="Ask about a specific academic topic or problem..."
         className="flex-1 bg-gray-900/50 text-white rounded-xl px-4 py-3 border border-blue-900/50 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
       />
       <button
