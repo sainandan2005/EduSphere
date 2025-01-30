@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900;
+}
+
+/* Custom scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900/30;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-900/60 rounded-full hover:bg-blue-800/60 transition-colors;
+}
