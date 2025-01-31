@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from './firebase';
-import { onAuthStateChanged, User, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import AuthModal from './components/AuthModal';
-import { Message, YouTubeVideo } from './types';
-import { ChatMessage } from './components/ChatMessage';
-import { ChatInput } from './components/ChatInput';
-import { VideoSuggestion } from './components/VideoSuggestion';
+import ChatMessage  from './components/ChatMessage';
+import ChatInput  from './components/ChatInput';
+import VideoSuggestion from './components/VideoSuggestion';
 import { Brain, Youtube, Loader2 } from 'lucide-react';
 import { generateResponse } from './services/gemini';
 import { searchVideos } from './services/youtube';
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [messages, setMessages] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
@@ -24,9 +24,9 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  const handleSendMessage = async (content: string) => {
+  const handleSendMessage = async (content) => {
     try {
-      const userMessage: Message = {
+      const userMessage = {
         id: Date.now().toString(),
         content,
         role: 'user',
@@ -38,7 +38,7 @@ function App() {
 
       const response = await generateResponse(content);
       
-      const botMessage: Message = {
+      const botMessage = {
         id: (Date.now() + 1).toString(),
         content: response,
         role: 'assistant',
@@ -50,7 +50,7 @@ function App() {
       setVideos(newVideos);
     } catch (error) {
       console.error('Error:', error);
-      const errorMessage: Message = {
+      const errorMessage = {
         id: (Date.now() + 1).toString(),
         content: "I apologize, but I'm having trouble processing your request. Please try again.",
         role: 'assistant',

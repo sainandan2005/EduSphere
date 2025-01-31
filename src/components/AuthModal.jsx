@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { auth, googleProvider } from '../firebase';
 import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
-const AuthModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const AuthModal = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
     try {
       if (isLogin) {

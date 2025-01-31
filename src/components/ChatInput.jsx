@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 
-interface ChatInputProps {
-  onSend: (message: string) => void;
-  disabled?: boolean;
-}
-
-export const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
+const ChatInput = ({ onSend, disabled }) => {
   const [input, setInput] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
       onSend(input);
@@ -37,3 +32,5 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
     </form>
   );
 };
+
+export default ChatInput;

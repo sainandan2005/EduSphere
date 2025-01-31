@@ -1,7 +1,6 @@
 import { YOUTUBE_API_KEY } from '../config';
-import { YouTubeVideo } from '../types';
 
-export async function searchVideos(query: string): Promise<YouTubeVideo[]> {
+export async function searchVideos(query) {
   try {
     const response = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=${encodeURIComponent(
@@ -15,7 +14,7 @@ export async function searchVideos(query: string): Promise<YouTubeVideo[]> {
 
     const data = await response.json();
     
-    return data.items.map((item: any) => ({
+    return data.items.map((item) => ({
       id: item.id.videoId,
       title: item.snippet.title,
       thumbnail: item.snippet.thumbnails.high.url,

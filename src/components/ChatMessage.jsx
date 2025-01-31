@@ -1,13 +1,8 @@
 import React from 'react';
-import { Message } from '../types';
 import { Bot, User } from 'lucide-react';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
-interface ChatMessageProps {
-  message: Message;
-}
-
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+const ChatMessage = ({ message }) => {
   const isBot = message.role === 'assistant';
 
   return (
@@ -41,9 +36,11 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             'prose-ol:text-blue-50 prose-ol:leading-relaxed',
             'prose-li:marker:text-blue-400'
           )}
-          dangerouslySetInnerHTML={{ __html: message.content }}
+          dangerouslySetInnerHTML={{ __html: message.content }} // Ensure content is sanitized
         />
       </div>
     </div>
   );
 };
+
+export default ChatMessage;

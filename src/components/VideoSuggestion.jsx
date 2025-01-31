@@ -1,12 +1,7 @@
 import React from 'react';
-import { YouTubeVideo } from '../types';
 import { ExternalLink } from 'lucide-react';
 
-interface VideoSuggestionProps {
-  video: YouTubeVideo;
-}
-
-export const VideoSuggestion: React.FC<VideoSuggestionProps> = ({ video }) => {
+const VideoSuggestion = ({ video }) => {
   return (
     <a
       href={`https://www.youtube.com/watch?v=${video.id}`}
@@ -34,3 +29,5 @@ export const VideoSuggestion: React.FC<VideoSuggestionProps> = ({ video }) => {
     </a>
   );
 };
+
+export default VideoSuggestion;

@@ -1,7 +1,7 @@
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
-export function formatResponse(text: string): string {
+export function formatResponse(text) {
   // Pre-process the text to ensure proper markdown formatting
   const processedText = text
     .replace(/\n{3,}/g, '\n\n') // Replace multiple newlines with double newlines

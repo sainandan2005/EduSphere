@@ -14,14 +14,14 @@ const SYSTEM_PROMPT = `You are EduSphere, an educational AI assistant. Format yo
 - Add line breaks between sections
 - Use headings for main topics (##)`;
 
-export async function generateResponse(prompt: string): Promise<string> {
+export async function generateResponse(prompt) {
   try {
     const result = await model.generateContent([
       { text: SYSTEM_PROMPT },
       { text: prompt }
     ]);
     const response = await result.response;
-    return formatResponse(response.text());
+    return formatResponse(await response.text());
   } catch (error) {
     console.error('Error generating response:', error);
     throw new Error('Failed to generate response');
