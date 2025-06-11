@@ -1,11 +1,19 @@
-# Igebra Hackathon
-Welcome to the Igebra Hackathon project repository! This project is developed using TypeScript, JavaScript, HTML, and CSS.
+# EduSphere
 
-## Description
-EduSphere is designed to revolutionize learning experiences through personalized guidance and interactive support. This project aims to provide an all in one place for your learning needs.
+EduSphere is a web-based platform designed to enhance learning through personalized tutoring, interactive content, and progress tracking. Built with React, JavaScript, HTML, and CSS, EduSphere leverages AI to provide tailored educational support for students.
 
-## Features
-Intelligent Tutoring: It can assess your strengths and weaknesses, and provide tailored instruction to help you excel.
-Personalized Learning Paths: It creates a customized study plans based on your goals, progress, and preferred learning styles.
-Interactive Content: I offer a wide range of engaging educational content, including videos, simulations, and interactive exercises.
-Progress Tracking and Analysis: I monitor your progress, identify areas for improvement, and provide regular feedback.
+## Key Features
+- **AI-Powered Tutoring:** Assess strengths and weaknesses, answer questions, and provide step-by-step guidance.
+- **Personalized Study Plans:** Generate custom learning paths based on user goals and progress.
+- **Interactive Content:** Access videos, simulations, and exercises to reinforce concepts.
+- **Seamless User Experience:** Modern UI with authentication and real-time chat support.
+
+## Technologies Used
+- React
+- Vite
+- Tailwind CSS
+- Firebase
+- Gemini API (for AI features)
+
+
+EduSphere aims to make learning more engaging, adaptive, and effective for everyone.
